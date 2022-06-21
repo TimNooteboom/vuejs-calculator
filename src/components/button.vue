@@ -1,7 +1,7 @@
 <template>
-    <div :class="type" @click="buttonClick(name)">
-        {{ name }}
-    </div>
+  <div class="button" :class="{'operator': operators.includes(name)}" @click="buttonClick(name)">
+    {{ name }}
+  </div>
 </template>
 
 <script>
@@ -10,26 +10,19 @@ export default {
   emits: ['btnClick'],
   data() {
     return {
+      operators: ['C', '+/-', '%', '/', 'x', '-', '+', '=', 'del']
     }
   },
   props: {
     name: {
-        type: String,
-        default: '',
-    },
-    type: {
-        type: String,
-        default: '',
+      type: String,
+      default: '',
     },
   },
   methods: {
     buttonClick(btn) {
-        this.$emit('btnClick', btn)
+      this.$emit('btnClick', btn)
     }
   },
 }
 </script>
-
-<style>
-
-</style>

@@ -1,23 +1,2 @@
-const buttons = [
-    {value: "C", type: "button"},
-    {value: "+/-", type: "button"},
-    {value: "%", type: "button"},
-    {value: "/", type: "operator"},
-    {value: "7", type: "button"},
-    {value: "8", type: "button"},
-    {value: "9", type: "button"},
-    {value: "x", type: "operator"},
-    {value: "4", type: "button"},
-    {value: "5", type: "button"},
-    {value: "6", type: "button"},
-    {value: "-", type: "operator"},
-    {value: "1", type: "button"},
-    {value: "2", type: "button"},
-    {value: "3", type: "button"},
-    {value: "+", type: "operator"},
-    {value: "0", type: "button"},
-    {value: ".", type: "button"},
-    {value: "del", type: "operator"},
-    {value: "=", type: "operator"},
-]
+const buttons = ["C", "+/-", "%", "/", "7", "8", "9", "x", "4", "5", "6", "-", "1", "2", "3", "+", "0", ".", "del", "="]
 export default buttons

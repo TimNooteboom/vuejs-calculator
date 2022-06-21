@@ -1,7 +1,7 @@
 <template>
   <div id="board">
     <div id="display">{{ display }}</div>
-    <Button v-for="button in buttons" :name="button.value" :type="button.type" @btn-click="btnClick"/>
+    <Button v-for="button in buttons" :key="button" :name="button" @btn-click="btnClick"/>
   </div>
 </template>
 
