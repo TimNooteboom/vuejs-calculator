@@ -19,6 +19,8 @@
     if (display.value === 0 && parseInt(num) === 0) {
       return
     }
+
+    if(num === '.' && display.value.indexOf('.') > -1) return
     if(num === '.' && display.value === 0) {
       display.value = '0'
       calculation.value = '0.'
@@ -50,10 +52,16 @@
         resetValues()
         break
       case '+/-':
-        // calculation.value += val
+        if(display.value.toString().charAt(0) === '-') {
+          display.value = display.value.toString().slice(1)
+        } else {
+          display.value = `-${display.value}`
+        }
+        calculation.value = display.value
         break
       case '%':
-        // calculation.value += val
+        display.value = parseFloat(display.value) / 100
+        calculation.value = display.value
         break
       case 'del':
         if(display.value.length > 1) {
@@ -102,6 +110,7 @@
   color: white;
 }
 #board {
+  margin: 0 auto;
   font-size: 25px;
   display: flex;
   flex-wrap: wrap;
