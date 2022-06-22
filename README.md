@@ -9,6 +9,11 @@ npm run dev
 
 
 ********
+Fix: divide by zero
+Make a calculator component
+Make it composition api
+Make font smaller if length > ? 
+
 Possible improvements:
 
 remember previous and current values as you type the operator

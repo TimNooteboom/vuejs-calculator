@@ -52,6 +52,7 @@
         resetValues()
         break
       case '+/-':
+        if(display.value === 0) return
         if(display.value.toString().charAt(0) === '-') {
           display.value = display.value.toString().slice(1)
         } else {
@@ -64,8 +65,9 @@
         calculation.value = display.value
         break
       case 'del':
+        console.log(display.value.toString().length)
         if(display.value.length > 1) {
-          display.value = display.value.slice(0, -1)
+          display.value = display.value.toString().slice(0, -1)
           calculation.value = display.value
         } else {
           resetValues()
