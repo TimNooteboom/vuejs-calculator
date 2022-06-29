@@ -11,8 +11,10 @@ npm run dev
 ********
 Fix: divide by zero
 Make a calculator component
-Make it composition api
-Make font smaller if length > ? 
+Make it all use composition api
+Make font smaller if length > ?
+Get a product then click 'del'
+Fix CSS for buttons
 
 Possible improvements:
 
@@ -21,7 +23,7 @@ create a data property called operator: null
 
 for +, -, *, /
 this.operator = (a,b) => a + b
-this.operator = (a,b) => a - b 
+this.operator = (a,b) => a - b
 
 then when you call equal
 this.dispaly = this.operator(previous, current)
