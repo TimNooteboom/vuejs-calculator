@@ -10,3 +10,6 @@ npm run dev
 
 ********
 Get a product then click 'del'
+Click any number, then '%' then '/'
+The font size doesn't change when the product is > 15 characters, but it does when typing
+Use the keyboard
