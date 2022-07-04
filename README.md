@@ -10,9 +10,7 @@ npm run dev
 
 ********
 Fix: divide by zero
-Make a calculator component
 Make it all use composition api
-Make font smaller if length > ?
 Get a product then click 'del'
 Fix CSS for buttons
 
