@@ -11,10 +11,13 @@
   import Button from './components/Button.vue'
   import { ref, watch } from 'vue'
 
-  const display = ref(0)
+  const display = ref('0')
   let operatorPressed = ref(false)
-  let calculation = ref('')
+  let lastPressedWasOperator = ref(false)
   let displayLength = ref(0)
+  let leftHandValue = ref('')
+  let calculation = null
+  let rightHandValue = ref('')
   const buttons = buttonsData
 
   watch(display, () => {
@@ -22,89 +25,119 @@
   })
 
   const concatNum = (num) => {
-    if (display.value === 0 && parseInt(num) === 0) {
+    // don't show multiple zeros 
+    if (display.value === '0' && num === '0') {
       return
     }
 
-    if(num === '.' && display.value.indexOf('.') > -1) return
-    if(num === '.' && display.value === 0) {
-      display.value = '0'
-      calculation.value = '0.'
+    // don't show multiple dots in a value
+    if(num === '.' && ['.'].includes(display.value)) return
+
+    // if first value is a dot, preceed with a zero
+    if(num === '.' && display.value === '0') {
+      display.value = '0.'
     } else {
-      calculation.value += num
+      display.value === '0' ? (display.value = num) : (display.value += num)
+    }
+
+    if(lastPressedWasOperator.value) {
+      display.value = num
+      lastPressedWasOperator.value = false
     }
 
     if(operatorPressed.value) {
-      display.value = 0
+      rightHandValue.value = display.value
+    } else {
+      leftHandValue.value = display.value
     }
-    operatorPressed.value = false
-    display.value === 0 ? (display.value = num) : (display.value += num)
-  }
-
-  const noDuplicateOperator = () => {
-    calculation.value = calculation.value.slice(0, -1)
+    console.log({left: leftHandValue.value, right: rightHandValue.value})
   }
 
   const resetValues = () => {
-    display.value = 0
+    display.value = '0'
     operatorPressed.value = false
-    calculation.value = ''
+    lastPressedWasOperator.value = false
+    leftHandValue.value = '0'
+    rightHandValue.value = '0'
+  }
+
+  const setOperator = () => {
+    operatorPressed.value = true
+    leftHandValue.value = display.value
+  }
+
+  const cancelOperation = () => {
+    leftHandValue = display.value
+    operatorPressed.value = false
+    lastPressedWasOperator.value = false
+  } 
+
+  const divideByZero = () => {
+    if(calculation?.toString().indexOf('/') > -1 && rightHandValue.value === '0') {
+      resetValues()
+      display.value = "You can't divide by zero, silly!"
+      setTimeout(() => { resetValues() },3000)
+      return true
+    }
+    return false
   }
 
   const operator = (val) => {
-    operatorPressed.value ? noDuplicateOperator() : ''
+    lastPressedWasOperator.value = true
+
     switch(val) {
       case 'C':
         resetValues()
         break
       case '+/-':
-        if(display.value === 0) return
+        if(display.value === '0') return
         if(display.value.toString().charAt(0) === '-') {
           display.value = display.value.toString().slice(1)
         } else {
           display.value = `-${display.value}`
         }
-        calculation.value = display.value
+        cancelOperation()
         break
       case '%':
         display.value = parseFloat(display.value) / 100
-        calculation.value = display.value
+        cancelOperation()
         break
       case 'del':
-        console.log(display.value.toString().length)
         if(display.value.length > 1) {
           display.value = display.value.toString().slice(0, -1)
-          calculation.value = display.value
+          cancelOperation()
         } else {
           resetValues()
         }
         break
       case 'x':
-        calculation.value += '*'
-        operatorPressed.value = true
+        calculation = (a,b) => a * b
+        setOperator()
         break
       case '/':
+        calculation = (a,b) => a / b
+        setOperator()
+        break
       case '-':
+        calculation = (a,b) => a - b
+        setOperator()
+        break
       case '+':
-        calculation.value += val
-        operatorPressed.value = true
+        calculation = (a,b) => a + b
+        setOperator()
         break
       case '=':
-        console.log('Equals: ', calculation.value)
-        display.value = eval(calculation.value)
-        operatorPressed.value = false
-        calculation.value = display.value
+        if(operatorPressed.value && !divideByZero()) {
+          display.value = calculation(parseFloat(leftHandValue.value), parseFloat(rightHandValue.value))
+          operatorPressed.value = false
+        }
         break
     } 
   }
 
-  // this is the value we get back from the button component
+  // this is the value we get back from the button component each time one is clicked
   const btnClick = (value) => {
     (/[0-9 .]/).test(value) ? concatNum(value) : operator(value)
-    
-    console.log('Display: ', display.value)
-    console.log('Calc: ', calculation.value)
-    console.log('')
   }
 </script>
 

@@ -9,17 +9,4 @@ npm run dev
 
 
 ********
-Fix: divide by zero
 Get a product then click 'del'
-
-Possible improvements:
-
-remember previous and current values as you type the operator
-create a data property called operator: null
-
-for +, -, *, /
-this.operator = (a,b) => a + b
-this.operator = (a,b) => a - b
-
-then when you call equal
-this.dispaly = this.operator(previous, current)
