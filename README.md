@@ -10,9 +10,7 @@ npm run dev
 
 ********
 Fix: divide by zero
-Make it all use composition api
 Get a product then click 'del'
-Fix CSS for buttons
 
 Possible improvements:
 
